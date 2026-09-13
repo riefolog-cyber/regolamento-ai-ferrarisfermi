@@ -1,18 +1,898 @@
-<!DOCTYPE html><html lang="it"><head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link rel="icon" href="./favicon.ico">
-		<meta property="og:image" content="./og-image.png">
-		<meta name="description" content="Lezione interattiva sul Regolamento per l'uso dei sistemi di Intelligenza Artificiale — IIS Ferraris–Fermi, Verona">
-		<link rel="preconnect" href="https://fonts.googleapis.com">
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-		<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,800&amp;family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&amp;display=swap" rel="stylesheet">
-		<title>Regolamento IA in pratica — IIS Ferraris–Fermi</title>
-		<script type="module" crossorigin="" src="./assets/index-Dj14GTsh.js"></script>
-		<link rel="stylesheet" crossorigin="" href="./assets/index-ComXZmFd.css">
-	<script defer="" src="./runable.js" data-hostname="regolam-waibk0n-website" data-url="https://r.lilstts.com/events"></script></head>
-	<body>
-		<div id="root"></div>
-	
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Regolamento IA — I.I.S. “Ferraris–Fermi” Verona</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/css/fraunces@latest/latin.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/css/sora@latest/latin.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/css/space-mono@latest/latin.css">
+<script>
+tailwind.config = {
+  theme: { extend: {
+    fontFamily: {
+      display: ['Fraunces','serif'],
+      body: ['Sora','sans-serif'],
+      mono: ['Space Mono','monospace']
+    },
+    colors: {
+      paper: '#F5F0E6',
+      ink:   '#101A2E',
+      cobalt:'#2E4BE0',
+      seal:  '#D23B2E',
+      gold:  '#FFD94A',
+      moss:  '#3E6B4F'
+    }
+  }}
+}
+</script>
+<style>
+  html{scroll-behavior:smooth;overflow-x:hidden}
+  body{overflow-x:hidden}
+  .grid > *{min-width:0}
+  p{overflow-wrap:anywhere}
+  body{background:#F5F0E6;color:#101A2E;font-family:'Sora',sans-serif}
+  section[id],article[id]{scroll-margin-top:96px}
+  ::selection{background:#FFD94A;color:#101A2E}
 
-</body></html>
+  .noise{position:fixed;inset:0;z-index:90;pointer-events:none;opacity:.055;mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity .8s ease,transform .8s cubic-bezier(.22,1,.36,1);transition-delay:var(--d,0s)}
+  .reveal.visible{opacity:1;transform:none}
+  .mask{overflow:hidden}
+  .mask .mask-inner{display:block;transform:translateY(112%);transition:transform .9s cubic-bezier(.22,1,.36,1);transition-delay:var(--d,0s)}
+  .mask.visible .mask-inner{transform:translateY(0)}
+
+  .hl{background:linear-gradient(transparent 58%,#FFD94A 58%,#FFD94A 92%,transparent 92%)}
+  .hl-c{background:linear-gradient(transparent 58%,rgba(46,75,224,.22) 58%)}
+
+  /* ── header & nav ── */
+  #siteHeader{transition:box-shadow .3s,background .3s}
+  #siteHeader.scrolled{box-shadow:0 10px 30px -18px rgba(16,26,46,.35);background:rgba(245,240,230,.94);backdrop-filter:blur(8px)}
+  .top-link{position:relative;cursor:pointer}
+  .top-link::after{content:'';position:absolute;left:0;bottom:-6px;height:2px;width:0;background:#2E4BE0;transition:width .3s}
+  .top-link:hover::after{width:100%}
+  .top-link.nav-active{color:#2E4BE0}
+  .top-link.nav-active::after{width:100%}
+
+  /* hamburger */
+  #btnMenu .bar{display:block;width:22px;height:2px;background:#101A2E;margin:5px auto;transition:transform .3s,opacity .3s}
+  #btnMenu.is-open .bar:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  #btnMenu.is-open .bar:nth-child(2){opacity:0}
+  #btnMenu.is-open .bar:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+  .mobile-link{cursor:pointer}
+  .mobile-link.nav-active{color:#2E4BE0}
+
+  .seal-rotate{animation:sealSpin 28s linear infinite;transform-origin:50% 50%}
+  @keyframes sealSpin{to{transform:rotate(360deg)}}
+
+  .kb-frame{overflow:hidden}
+  .kb-frame img{animation:kenburns 20s ease-in-out infinite alternate;transform-origin:center}
+  @keyframes kenburns{from{transform:scale(1) translate(0,0)}to{transform:scale(1.12) translate(2%,-2%)}}
+
+  .ticker{overflow:hidden}
+  .ticker-track{display:flex;width:max-content;animation:tickerMove 32s linear infinite}
+  .ticker:hover .ticker-track{animation-play-state:paused}
+  @keyframes tickerMove{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+  .toc-link{position:relative;display:flex;gap:.6rem;align-items:baseline;padding:.4rem .8rem;border-left:2px solid rgba(16,26,46,.14);transition:border-color .25s,background .25s,color .25s;font-size:.82rem}
+  .toc-link:hover{border-color:rgba(16,26,46,.45)}
+  .toc-link .toc-num{font-family:'Space Mono',monospace;color:rgba(16,26,46,.42);transition:color .25s}
+  .toc-link.active{border-color:#2E4BE0;background:rgba(46,75,224,.07);color:#101A2E;font-weight:600}
+  .toc-link.active .toc-num{color:#2E4BE0}
+  .toc-chip{white-space:nowrap;border:1px solid rgba(16,26,46,.2);border-radius:9999px;padding:.4rem .9rem;font-size:.75rem;font-family:'Space Mono',monospace;transition:all .25s}
+  .toc-chip.active{background:#101A2E;color:#F5F0E6;border-color:#101A2E}
+
+  .stamp{display:inline-block;border:2px solid currentColor;padding:.15rem .6rem;font-family:'Space Mono',monospace;text-transform:uppercase;letter-spacing:.18em;font-size:.65rem;transform:rotate(-4deg)}
+
+  .card-lift{transition:transform .35s cubic-bezier(.22,1,.36,1),box-shadow .35s,border-color .35s}
+  .card-lift:hover{transform:translateY(-5px);box-shadow:0 22px 40px -24px rgba(16,26,46,.35)}
+
+  .tab-btn{transition:all .25s}
+  .tab-active{background:#101A2E !important;color:#F5F0E6 !important;border-color:#101A2E !important}
+
+  .schema-card{position:relative;overflow:hidden;transition:transform .28s cubic-bezier(.22,1,.36,1),box-shadow .28s ease,border-color .28s ease,background .28s ease}
+  .schema-card::before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(46,75,224,.08),transparent 55%,rgba(210,59,46,.08));transform:translateX(-110%);transition:transform .45s cubic-bezier(.22,1,.36,1)}
+  .schema-card:hover{transform:translateY(-6px);box-shadow:0 18px 28px -18px rgba(16,26,46,.35);border-color:rgba(16,26,46,.35)}
+  .schema-card:hover::before{transform:translateX(0)}
+  .schema-node{position:relative;overflow:hidden;transition:all .28s cubic-bezier(.22,1,.36,1);border:1.5px solid rgba(16,26,46,.12)}
+  .schema-node:hover{transform:translateY(-4px);border-color:rgba(46,75,224,.5);box-shadow:0 16px 26px -18px rgba(46,75,224,.45)}
+  .schema-node .node-dot{width:10px;height:10px;border-radius:9999px;background:#2E4BE0;box-shadow:0 0 0 5px rgba(46,75,224,.12)}
+
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto}
+    *,*::before,*::after{animation-duration:.001s !important;animation-iteration-count:1 !important;transition-duration:.001s !important}
+    .reveal,.mask .mask-inner{opacity:1 !important;transform:none !important}
+  }
+  @media print{
+    .no-print,.noise{display:none !important}
+    .reveal,.mask .mask-inner{opacity:1 !important;transform:none !important}
+    body{background:#fff}
+  }
+</style>
+</head>
+<body class="antialiased">
+
+<div class="noise" aria-hidden="true"></div>
+<div id="progressBar" class="no-print pointer-events-none fixed top-0 left-0 h-[3px] bg-seal z-[95] w-0"></div>
+
+<!-- ══════════ HEADER ══════════ -->
+<header id="siteHeader" class="no-print fixed top-0 inset-x-0 z-[80] bg-paper/90 border-b border-ink/10">
+  <div class="max-w-7xl mx-auto px-5 h-16 flex items-center justify-between gap-4">
+    <a href="#top" class="flex items-center gap-3 shrink-0">
+      <span class="w-9 h-9 rounded-full bg-seal text-paper font-display font-black italic grid place-items-center text-sm">FF</span>
+      <span class="leading-tight">
+        <span class="block font-display font-black text-sm tracking-tight">I.I.S. “Ferraris–Fermi”</span>
+        <span class="block font-mono text-[10px] uppercase tracking-[.22em] text-ink/55">Verona · VRIS01800R</span>
+      </span>
+    </a>
+
+    <!-- nav desktop -->
+    <nav class="hidden lg:flex items-center gap-6 text-[13px] font-semibold">
+      <a href="#quadro"     data-sec="quadro"     class="top-link">Quadro</a>
+      <a href="#principi"   data-sec="principi"   class="top-link">Princìpi</a>
+      <a href="#articoli"   data-sec="articoli"   class="top-link">Articoli</a>
+      <a href="#strumenti"  data-sec="strumenti"  class="top-link">Strumenti</a>
+      <a href="#sanzioni"   data-sec="sanzioni"   class="top-link">Sanzioni</a>
+      <a href="#governance" data-sec="governance" class="top-link">Governance</a>
+      <a href="#montorio"   data-sec="montorio"   class="top-link">Montorio</a>
+    </nav>
+
+    <div class="flex items-center gap-3 shrink-0">
+      <button id="btnStampa" class="hidden sm:inline-flex font-mono text-[11px] uppercase tracking-[.18em] border-2 border-ink rounded-full px-4 py-2 hover:bg-ink hover:text-paper transition-colors">Stampa PDF</button>
+      <!-- hamburger (mobile/tablet) -->
+      <button id="btnMenu" class="lg:hidden w-11 h-11 grid place-items-center border-2 border-ink rounded-full hover:bg-ink group transition-colors" aria-label="Apri il menu di navigazione" aria-expanded="false" aria-controls="mobileMenu">
+        <span class="group-hover:bg-paper" style="display:contents">
+          <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+        </span>
+      </button>
+    </div>
+  </div>
+
+  <!-- pannello menu mobile -->
+  <div id="mobileMenu" class="lg:hidden overflow-hidden" style="max-height:0;transition:max-height .5s cubic-bezier(.22,1,.36,1)">
+    <nav class="px-5 pt-2 pb-5 bg-paper border-t border-ink/10">
+      <a href="#quadro"     data-sec="quadro"     class="mobile-link flex items-center justify-between py-3.5 border-b border-ink/10 font-semibold hover:text-cobalt transition-colors">Quadro generale <span class="font-mono text-[10px] text-ink/40">01</span></a>
+      <a href="#principi"   data-sec="principi"   class="mobile-link flex items-center justify-between py-3.5 border-b border-ink/10 font-semibold hover:text-cobalt transition-colors">Princìpi inderogabili <span class="font-mono text-[10px] text-ink/40">02</span></a>
+      <a href="#articoli"   data-sec="articoli"   class="mobile-link flex items-center justify-between py-3.5 border-b border-ink/10 font-semibold hover:text-cobalt transition-colors">Testo del Regolamento <span class="font-mono text-[10px] text-ink/40">03</span></a>
+      <a href="#strumenti"  data-sec="strumenti"  class="mobile-link flex items-center justify-between py-3.5 border-b border-ink/10 font-semibold hover:text-cobalt transition-colors">Strumenti ammessi e vietati <span class="font-mono text-[10px] text-ink/40">04</span></a>
+      <a href="#sanzioni"   data-sec="sanzioni"   class="mobile-link flex items-center justify-between py-3.5 border-b border-ink/10 font-semibold hover:text-cobalt transition-colors">Sanzioni e contraddittorio <span class="font-mono text-[10px] text-ink/40">05</span></a>
+      <a href="#governance" data-sec="governance" class="mobile-link flex items-center justify-between py-3.5 border-b border-ink/10 font-semibold hover:text-cobalt transition-colors">Governance e formazione <span class="font-mono text-[10px] text-ink/40">06</span></a>
+      <a href="#montorio"   data-sec="montorio"   class="mobile-link flex items-center justify-between py-3.5 border-b border-ink/10 font-semibold hover:text-cobalt transition-colors">Sede carceraria di Montorio <span class="font-mono text-[10px] text-ink/40">07</span></a>
+      <button id="btnStampaMobile" class="mt-5 w-full font-mono text-[11px] uppercase tracking-[.18em] border-2 border-ink rounded-full px-4 py-3 hover:bg-ink hover:text-paper transition-colors">Stampa PDF</button>
+    </nav>
+  </div>
+</header>
+
+<!-- ══════════ INTESTAZIONE / HERO ══════════ -->
+<section id="top" class="pt-16">
+  <!-- Letterhead -->
+  <div class="border-b-2 border-ink bg-paper">
+    <div class="max-w-7xl mx-auto px-5 py-4 grid md:grid-cols-3 gap-x-8 gap-y-2 font-mono text-[10.5px] leading-relaxed text-ink/80">
+      <p><span class="font-bold text-ink">ISTITUTO TECNICO TECNOLOGICO “G. FERRARIS”</span><br>via del Pontiere, 40 — 37122 Verona · tel. 045 595855</p>
+      <p><span class="font-bold text-ink">ISTITUTO PROFESSIONALE “E. FERMI”</span><br>Piazzale Guardini, 2 — 37138 Verona · tel. 045 595855</p>
+      <p><span class="font-bold text-ink">SCUOLA CARCERARIA · INDIRIZZO ODONTOTECNICO</span><br>Via San Michele, 15 — 37141 Montorio (VR) · tel. 045 595855</p>
+    </div>
+    <div class="border-t border-ink/20">
+      <p class="max-w-7xl mx-auto px-5 py-2 font-mono text-[10px] tracking-wide text-ink/60">Cod. Mecc. <span class="text-seal font-bold">VRIS01800R</span> · C.F. 93245100230 · vris01800r@istruzione.it · vris01800r@pec.istruzione.it · www.ferrarisfermi.it</p>
+    </div>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-5 pt-14 pb-16 relative">
+    <div class="grid lg:grid-cols-[1fr_auto] gap-10 items-start">
+      <div>
+        <p class="reveal font-mono text-[11px] uppercase tracking-[.3em] text-cobalt mb-6">Proposta Collegio dei Docenti · a.s. 2026/2027</p>
+        <h1 class="font-display font-black leading-[0.98] tracking-tight">
+          <span class="mask block text-2xl md:text-3xl font-semibold italic text-ink/70"><span class="mask-inner">Regolamento per l’uso dei sistemi di</span></span>
+          <span class="mask block text-[13.5vw] lg:text-[6.4rem] mt-2 text-ink"><span class="mask-inner" data-scramble data-text="INTELLIGENZA">INTELLIGENZA</span></span>
+          <span class="mask block text-[13.5vw] lg:text-[6.4rem] text-cobalt"><span class="mask-inner" data-scramble data-text="ARTIFICIALE">ARTIFICIALE</span></span>
+          <span class="mask block text-2xl md:text-3xl font-semibold italic text-ink/70 mt-2"><span class="mask-inner">in ambito scolastico</span></span>
+        </h1>
+        <p class="reveal mt-8 max-w-2xl text-ink/75 leading-relaxed" style="--d:.15s">
+          Un uso <span class="hl font-semibold">etico, sicuro, consapevole e responsabile</span> dell’IA — anche generativa: ChatGPT, Gemini, Copilot, Claude — negli spazi fisici e virtuali dell’Istituto. Parte integrante del Regolamento d’Istituto, in raccordo con PTOF e Regolamento degli Uffici di Segreteria. La tecnologia <em class="font-display font-bold">integra e potenzia</em> — mai sostituisce — il giudizio critico dello studente.
+        </p>
+        <div class="reveal mt-8 flex flex-wrap gap-2 font-mono text-[11px]" style="--d:.25s">
+          <span class="border border-ink/25 rounded-full px-3 py-1.5 hover:border-cobalt hover:text-cobalt transition-colors">AI ACT · Reg. UE 2024/1689</span>
+          <span class="border border-ink/25 rounded-full px-3 py-1.5 hover:border-cobalt hover:text-cobalt transition-colors">Legge 132/2025</span>
+          <span class="border border-ink/25 rounded-full px-3 py-1.5 hover:border-cobalt hover:text-cobalt transition-colors">GDPR · Reg. UE 2016/679</span>
+          <span class="border border-ink/25 rounded-full px-3 py-1.5 hover:border-cobalt hover:text-cobalt transition-colors">Linee Guida MIM</span>
+          <span class="bg-seal text-paper rounded-full px-3 py-1.5 font-bold">IN VIGORE DAL 01·09·2026</span>
+        </div>
+        <div class="reveal mt-10 grid grid-cols-2 sm:grid-cols-4 gap-6 max-w-2xl border-t-2 border-ink pt-6" style="--d:.35s">
+          <div><p class="font-display text-4xl font-black text-ink"><span data-count="13">0</span></p><p class="font-mono text-[10px] uppercase tracking-[.18em] text-ink/55 mt-1">Articoli</p></div>
+          <div><p class="font-display text-4xl font-black text-cobalt"><span data-count="6">0</span></p><p class="font-mono text-[10px] uppercase tracking-[.18em] text-ink/55 mt-1">Riferimenti normativi</p></div>
+          <div><p class="font-display text-4xl font-black text-moss"><span data-count="3">0</span></p><p class="font-mono text-[10px] uppercase tracking-[.18em] text-ink/55 mt-1">Sedi dell’Istituto</p></div>
+          <div><p class="font-display text-4xl font-black text-seal"><span data-count="5">0</span></p><p class="font-mono text-[10px] uppercase tracking-[.18em] text-ink/55 mt-1">Pratiche IA vietate</p></div>
+        </div>
+      </div>
+
+      <!-- Sigillo -->
+      <div class="reveal hidden md:block relative" style="--d:.2s">
+        <svg viewBox="0 0 220 220" class="w-56 h-56 text-seal">
+          <g class="seal-rotate">
+            <circle cx="110" cy="110" r="104" fill="none" stroke="currentColor" stroke-width="2.5"/>
+            <circle cx="110" cy="110" r="98" fill="none" stroke="currentColor" stroke-width="1"/>
+            <defs><path id="circPath" d="M110,110 m-84,0 a84,84 0 1,1 168,0 a84,84 0 1,1 -168,0"/></defs>
+            <text font-family="Space Mono, monospace" font-size="12.5" letter-spacing="2.2" fill="currentColor">
+              <textPath href="#circPath">I.I.S. FERRARIS–FERMI · VERONA · REGOLAMENTO IA · A.S. 2026/2027 ·&#160;</textPath>
+            </text>
+          </g>
+          <circle cx="110" cy="110" r="62" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 5"/>
+          <text x="110" y="122" text-anchor="middle" font-family="Fraunces, serif" font-style="italic" font-weight="900" font-size="40" fill="currentColor">§IA</text>
+        </svg>
+        <p class="stamp text-seal mt-4">Uso umano supervisionato</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ TICKER ══════════ -->
+<div class="ticker border-y-2 border-ink bg-ink text-paper py-3 no-print" aria-hidden="true">
+  <div class="ticker-track font-mono text-[11px] uppercase tracking-[.25em]">
+    <span class="px-6">Reg. UE 2024/1689 — AI Act ✦ Legge 132/2025 ✦ GDPR Reg. UE 2016/679 ✦ Linee Guida MIM ✦ L. 633/1941 Diritto d’autore ✦ D.Lgs. 24/2023 Whistleblowing ✦ Statuto delle Studentesse e degli Studenti ✦</span>
+    <span class="px-6">Reg. UE 2024/1689 — AI Act ✦ Legge 132/2025 ✦ GDPR Reg. UE 2016/679 ✦ Linee Guida MIM ✦ L. 633/1941 Diritto d’autore ✦ D.Lgs. 24/2023 Whistleblowing ✦ Statuto delle Studentesse e degli Studenti ✦</span>
+  </div>
+</div>
+
+<!-- ══════════ QUADRO GENERALE ══════════ -->
+<section id="quadro" class="max-w-7xl mx-auto px-5 py-24 grid lg:grid-cols-[1.05fr_.95fr] gap-14 items-center">
+  <div>
+    <p class="reveal font-mono text-[11px] uppercase tracking-[.3em] text-cobalt mb-4">Premessa · Quadro generale ed efficacia</p>
+    <h2 class="mask font-display text-4xl md:text-5xl font-black leading-tight"><span class="mask-inner">La scuola adotta l’IA,<br><span class="italic text-cobalt">senza delegarle il pensiero.</span></span></h2>
+    <div class="reveal mt-6 space-y-4 text-ink/75 leading-relaxed" style="--d:.1s">
+      <p>L’Istituto riconosce nell’IA uno <span class="hl font-semibold">strumento sussidiario avanzato</span> per didattica, inclusione e personalizzazione degli apprendimenti, con particolare rilievo per studenti con <strong>BES</strong> e <strong>DSA</strong>. Il documento integra presidi specifici per la <strong>valutazione autentica</strong> e la protezione dal rischio di <strong>falsi positivi</strong> negli accertamenti didattici.</p>
+      <p>Princìpi inderogabili: trasparenza e integrità intellettuale, supervisione umana, riservatezza <em>(privacy by design &amp; by default)</em>, rigore accademico e contrasto al plagio, diritto d’autore, responsabilità individuale.</p>
+    </div>
+    <!-- Timeline -->
+    <div class="reveal mt-10" style="--d:.2s">
+      <p class="font-mono text-[10px] uppercase tracking-[.22em] text-ink/50 mb-4">Cronoprogramma di attuazione</p>
+      <ol class="relative border-l-2 border-ink/20 space-y-8 pl-8">
+        <li class="relative">
+          <span class="absolute -left-[41px] w-4 h-4 rounded-full bg-seal border-4 border-paper"></span>
+          <p class="font-mono text-xs font-bold text-seal">01 · 09 · 2026</p>
+          <p class="font-semibold">Entrata in vigore</p>
+          <p class="text-sm text-ink/65">Il Regolamento entra in vigore quale parte integrante del Regolamento d’Istituto.</p>
+        </li>
+        <li class="relative">
+          <span class="absolute -left-[41px] w-4 h-4 rounded-full bg-cobalt border-4 border-paper"></span>
+          <p class="font-mono text-xs font-bold text-cobalt">FINO AL 31 · 12 · 2026</p>
+          <p class="font-semibold">Sperimentazione assistita</p>
+          <p class="text-sm text-ink/65">Fase pilota affidata al Team di Governance IA, con accompagnamento delle pratiche didattiche.</p>
+        </li>
+        <li class="relative">
+          <span class="absolute -left-[41px] w-4 h-4 rounded-full bg-moss border-4 border-paper"></span>
+          <p class="font-mono text-xs font-bold text-moss">DOPO LA VERIFICA</p>
+          <p class="font-semibold">Applicazione piena</p>
+          <p class="text-sm text-ink/65">Il Collegio dei Docenti verifica l’operatività e delibera l’applicazione piena del Regolamento.</p>
+        </li>
+      </ol>
+    </div>
+  </div>
+  <figure class="reveal" style="--d:.15s">
+    <div class="kb-frame border-2 border-ink shadow-[10px_10px_0_0_#2E4BE0] bg-paper">
+      <img src="https://image.qwenlm.ai/public_source/42204361-1b94-45ac-853a-76ec5ab28526/1105f7a4a-71e0-443e-92e2-3ee4f4aa7813.png" alt="Incisione: l’edificio scolastico classico che si intreccia a una rete neurale" class="w-full h-auto block">
+    </div>
+    <figcaption class="mt-4 font-mono text-[10.5px] uppercase tracking-[.2em] text-ink/55 flex justify-between">
+      <span>Tav. I — L’istituzione incontra la rete</span><span>art. 1–2</span>
+    </figcaption>
+  </figure>
+</section>
+
+<!-- ══════════ SCHEMA REGOLAMENTO ══════════ -->
+<section id="schema" class="max-w-7xl mx-auto px-5 py-20">
+  <div class="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+    <div>
+      <p class="reveal font-mono text-[11px] uppercase tracking-[.3em] text-cobalt mb-3">Mappa del sistema</p>
+      <h2 class="mask font-display text-4xl md:text-5xl font-black leading-tight"><span class="mask-inner">Schema del regolamento<br><span class="italic text-cobalt">in una sola vista</span></span></h2>
+    </div>
+    <a href="regolamento-ia-schema.html?theme=light&embed=1" target="_blank" rel="noopener" class="reveal inline-flex items-center gap-2 rounded-full border-2 border-ink bg-paper px-4 py-2 font-mono text-[10px] uppercase tracking-[.2em] text-ink transition hover:bg-ink hover:text-paper">Apri schema completo →</a>
+  </div>
+
+  <div class="reveal mb-8 max-w-3xl text-ink/75 leading-relaxed" style="--d:.1s">
+    Il regolamento non è un elenco astratto: è un sistema composto da <strong>persone, strumenti, dati, responsabilità e controlli</strong>. Il diagramma mostra come ciascun attore si muove dentro il quadro normativo, dove si applicano i vincoli e dove si esercita la supervisione umana.
+  </div>
+
+  <div class="reveal grid gap-6 lg:grid-cols-[1.5fr_0.8fr]" style="--d:.12s">
+    <div class="overflow-hidden border-2 border-ink bg-paper shadow-[12px_12px_0_0_#2E4BE0]">
+      <div class="flex items-center justify-between gap-4 border-b-2 border-ink bg-ink px-4 py-3 text-[10px] font-mono uppercase tracking-[.2em] text-paper">
+        <span>Schema IA – panorama istituzionale</span>
+        <span class="text-gold">live</span>
+      </div>
+      <iframe
+        src="regolamento-ia-schema.html?theme=light&embed=1"
+        title="Schema del regolamento IA"
+        class="block w-full h-[1500px] md:h-[1180px] bg-paper"
+        loading="lazy"
+        referrerpolicy="strict-origin-when-cross-origin"
+      ></iframe>
+    </div>
+
+    <div class="grid gap-4">
+      <div class="schema-card rounded-none border-2 border-ink bg-[#F7F5F0] p-4 md:p-5">
+        <p class="font-mono text-[10px] uppercase tracking-[.2em] text-cobalt mb-3">01 · Attori</p>
+        <h3 class="font-display text-2xl font-black leading-tight mb-2">Docenti e studenti</h3>
+        <p class="text-sm leading-relaxed text-ink/70">Tutti usano l’IA nell’ambito scolastico, ma la responsabilità del risultato resta sempre umana.</p>
+      </div>
+      <div class="schema-card rounded-none border-2 border-ink bg-[#F7F5F0] p-4 md:p-5">
+        <p class="font-mono text-[10px] uppercase tracking-[.2em] text-cobalt mb-3">02 · Strumenti</p>
+        <h3 class="font-display text-2xl font-black leading-tight mb-2">White-list</h3>
+        <p class="text-sm leading-relaxed text-ink/70">Solo strumenti autorizzati, conformi alla privacy e alla sicurezza dei dati personali.</p>
+      </div>
+      <div class="schema-card rounded-none border-2 border-ink bg-[#F7F5F0] p-4 md:p-5">
+        <p class="font-mono text-[10px] uppercase tracking-[.2em] text-cobalt mb-3">03 · Governance</p>
+        <h3 class="font-display text-2xl font-black leading-tight mb-2">Team IA</h3>
+        <p class="text-sm leading-relaxed text-ink/70">Il coordinamento interno verifica l’uso, forma il personale e monitora l’adeguatezza del sistema.</p>
+      </div>
+      <div class="schema-card rounded-none border-2 border-ink bg-[#F7F5F0] p-4 md:p-5">
+        <p class="font-mono text-[10px] uppercase tracking-[.2em] text-cobalt mb-3">04 · Controllo</p>
+        <h3 class="font-display text-2xl font-black leading-tight mb-2">Sanzioni e revisione</h3>
+        <p class="text-sm leading-relaxed text-ink/70">Le violazioni sono graduali, proporzionate e accompagnate da un percorso di chiarimento e correttivo.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal mt-8 grid gap-4 md:grid-cols-4" style="--d:.18s">
+    <div class="schema-node rounded-none border-2 border-ink bg-paper p-4 transition-all duration-300">
+      <div class="node-dot mb-4"></div>
+      <p class="font-mono text-[10px] uppercase tracking-[.2em] text-ink/55">Riservatezza</p>
+      <p class="mt-2 text-sm leading-relaxed text-ink/75">Dati protetti, nessun dato sensibile in ambienti non autorizzati.</p>
+    </div>
+    <div class="schema-node rounded-none border-2 border-ink bg-paper p-4 transition-all duration-300">
+      <div class="node-dot mb-4"></div>
+      <p class="font-mono text-[10px] uppercase tracking-[.2em] text-ink/55">Trasparenza</p>
+      <p class="mt-2 text-sm leading-relaxed text-ink/75">Uso dichiarato, citato e valutato secondo criteri didattici chiari.</p>
+    </div>
+    <div class="schema-node rounded-none border-2 border-ink bg-paper p-4 transition-all duration-300">
+      <div class="node-dot mb-4"></div>
+      <p class="font-mono text-[10px] uppercase tracking-[.2em] text-ink/55">Supervisione</p>
+      <p class="mt-2 text-sm leading-relaxed text-ink/75">L’AI sostiene, ma il docente e lo studente mantengono il giudizio finale.</p>
+    </div>
+    <div class="schema-node rounded-none border-2 border-ink bg-paper p-4 transition-all duration-300">
+      <div class="node-dot mb-4"></div>
+      <p class="font-mono text-[10px] uppercase tracking-[.2em] text-ink/55">Responsabilità</p>
+      <p class="mt-2 text-sm leading-relaxed text-ink/75">Ogni scelta d’uso ha un riferimento chiaro e una possibile verifica interna.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ PRINCÌPI ══════════ -->
+<section id="principi" class="bg-ink text-paper py-24">
+  <div class="max-w-7xl mx-auto px-5">
+    <div class="flex flex-wrap items-end justify-between gap-6 mb-12">
+      <div>
+        <p class="reveal font-mono text-[11px] uppercase tracking-[.3em] text-gold mb-3">Premessa, comma 4</p>
+        <h2 class="mask font-display text-4xl md:text-5xl font-black"><span class="mask-inner">Sei princìpi <span class="italic text-gold">inderogabili</span></span></h2>
+      </div>
+      <p class="reveal max-w-sm text-paper/60 text-sm leading-relaxed">Ogni impiego dell’IA negli spazi e nelle pertinenze fisiche e virtuali dell’Istituto è subordinato al rispetto integrale dei seguenti princìpi.</p>
+    </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      <div class="reveal card-lift border border-paper/20 p-7 bg-ink"><p class="font-mono text-gold text-xs mb-6">P·01</p><h3 class="font-display text-2xl font-bold mb-3">Trasparenza</h3><p class="text-paper/65 text-sm leading-relaxed">Integrità intellettuale in ogni elaborato: l’uso dell’IA va dichiarato, tracciato e citato con onestà.</p></div>
+      <div class="reveal card-lift border border-paper/20 p-7 bg-ink" style="--d:.08s"><p class="font-mono text-gold text-xs mb-6">P·02</p><h3 class="font-display text-2xl font-bold mb-3">Supervisione umana</h3><p class="text-paper/65 text-sm leading-relaxed">Nessun output algoritmico surroga il giudizio del docente: <em>human-in-the-loop</em>, sempre.</p></div>
+      <div class="reveal card-lift border border-paper/20 p-7 bg-ink" style="--d:.16s"><p class="font-mono text-gold text-xs mb-6">P·03</p><h3 class="font-display text-2xl font-bold mb-3">Riservatezza</h3><p class="text-paper/65 text-sm leading-relaxed">Privacy <em>by design</em> e <em>by default</em>: nessun dato personale o sensibile in piattaforme non convenzionate.</p></div>
+      <div class="reveal card-lift border border-paper/20 p-7 bg-ink" style="--d:.24s"><p class="font-mono text-gold text-xs mb-6">P·04</p><h3 class="font-display text-2xl font-bold mb-3">Rigore accademico</h3><p class="text-paper/65 text-sm leading-relaxed">Contrasto al plagio e alla sostituzione cognitiva: il merito si dimostra, non si genera.</p></div>
+      <div class="reveal card-lift border border-paper/20 p-7 bg-ink" style="--d:.32s"><p class="font-mono text-gold text-xs mb-6">P·05</p><h3 class="font-display text-2xl font-bold mb-3">Diritto d’autore</h3><p class="text-paper/65 text-sm leading-relaxed">I contenuti generati integralmente da IA non sono tutelati (L. 633/1941): conta l’apporto personale.</p></div>
+      <div class="reveal card-lift border border-paper/20 p-7 bg-ink" style="--d:.4s"><p class="font-mono text-gold text-xs mb-6">P·06</p><h3 class="font-display text-2xl font-bold mb-3">Responsabilità individuale</h3><p class="text-paper/65 text-sm leading-relaxed">Ciascun membro della comunità risponde delle proprie scelte d’uso, con finalità rieducativa.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ ARTICOLI · TESTO ══════════ -->
+<section id="articoli" class="max-w-7xl mx-auto px-5 py-24">
+  <div class="mb-12">
+    <p class="reveal font-mono text-[11px] uppercase tracking-[.3em] text-cobalt mb-3">Artt. 1 – 13</p>
+    <h2 class="mask font-display text-4xl md:text-6xl font-black"><span class="mask-inner">Il testo del Regolamento</span></h2>
+  </div>
+
+  <!-- chips mobile -->
+  <div class="lg:hidden flex gap-2 overflow-x-auto pb-4 mb-6 no-print" id="tocChips">
+    <a href="#art-1" data-target="art-1" class="toc-chip">01 Oggetto</a>
+    <a href="#art-2" data-target="art-2" class="toc-chip">02 Normativa</a>
+    <a href="#art-3" data-target="art-3" class="toc-chip">03 Docenti</a>
+    <a href="#art-4" data-target="art-4" class="toc-chip">04 Studenti</a>
+    <a href="#art-5" data-target="art-5" class="toc-chip">05 ATA</a>
+    <a href="#art-6" data-target="art-6" class="toc-chip">06 Dati</a>
+    <a href="#art-7" data-target="art-7" class="toc-chip">07 White-list</a>
+    <a href="#art-8" data-target="art-8" class="toc-chip">08 Governance</a>
+    <a href="#art-9" data-target="art-9" class="toc-chip">09 Formazione</a>
+    <a href="#art-10" data-target="art-10" class="toc-chip">10 Sanzioni</a>
+    <a href="#art-11" data-target="art-11" class="toc-chip">11 Segnalazione</a>
+    <a href="#art-12" data-target="art-12" class="toc-chip">12 Revisione</a>
+    <a href="#art-13" data-target="art-13" class="toc-chip">13 Montorio</a>
+  </div>
+
+  <div class="grid lg:grid-cols-[290px_1fr] gap-12">
+    <!-- TOC sticky -->
+    <aside class="hidden lg:block self-start sticky top-24 no-print">
+      <p class="font-mono text-[10px] uppercase tracking-[.22em] text-ink/50 mb-4">Sommario</p>
+      <nav class="space-y-0.5">
+        <a href="#art-1" data-target="art-1" class="toc-link"><span class="toc-num">01</span> Oggetto e ambito</a>
+        <a href="#art-2" data-target="art-2" class="toc-link"><span class="toc-num">02</span> Riferimenti normativi</a>
+        <a href="#art-3" data-target="art-3" class="toc-link"><span class="toc-num">03</span> Docenti</a>
+        <a href="#art-4" data-target="art-4" class="toc-link"><span class="toc-num">04</span> Studenti</a>
+        <a href="#art-5" data-target="art-5" class="toc-link"><span class="toc-num">05</span> Personale ATA e uffici</a>
+        <a href="#art-6" data-target="art-6" class="toc-link"><span class="toc-num">06</span> Utilizzo e protezione dati</a>
+        <a href="#art-7" data-target="art-7" class="toc-link"><span class="toc-num">07</span> Strumenti ammessi / vietati</a>
+        <a href="#art-8" data-target="art-8" class="toc-link"><span class="toc-num">08</span> Governance IA</a>
+        <a href="#art-9" data-target="art-9" class="toc-link"><span class="toc-num">09</span> Formazione</a>
+        <a href="#art-10" data-target="art-10" class="toc-link"><span class="toc-num">10</span> Sanzioni e contraddittorio</a>
+        <a href="#art-11" data-target="art-11" class="toc-link"><span class="toc-num">11</span> Segnalazione interna</a>
+        <a href="#art-12" data-target="art-12" class="toc-link"><span class="toc-num">12</span> Revisione periodica</a>
+        <a href="#art-13" data-target="art-13" class="toc-link"><span class="toc-num">13</span> Sede carceraria</a>
+      </nav>
+      <div class="mt-8 border-2 border-ink p-4 bg-gold/40">
+        <p class="font-mono text-[10px] uppercase tracking-[.2em] mb-1">Nota di lettura</p>
+        <p class="text-xs leading-relaxed text-ink/75">In caso di contrasto prevalgono le disposizioni più rigorose in materia di protezione dei dati e tutela degli studenti.</p>
+      </div>
+    </aside>
+
+    <!-- Articoli -->
+    <div class="space-y-16 max-w-3xl">
+
+      <article id="art-1" class="reveal">
+        <header class="border-b-2 border-ink flex items-baseline gap-4 pb-3 mb-6"><span class="font-mono text-cobalt font-bold text-sm">ART. 01</span><h3 class="font-display text-2xl md:text-3xl font-black">Oggetto e Ambito di Applicazione</h3></header>
+        <div class="space-y-4 text-[15px] text-ink/80 leading-relaxed">
+          <p>Il Regolamento detta le disposizioni cogenti per l’impiego etico, sicuro, consapevole e responsabile dei sistemi di IA da parte di tutti i soggetti della comunità scolastica: <strong>docenti, studenti, famiglie e personale ATA</strong>.</p>
+          <ul class="space-y-2 pl-1">
+            <li class="flex gap-3"><span class="font-mono text-cobalt font-bold">a)</span> uso correlato ad attività scolastiche curricolari o extracurricolari: lezioni, laboratori, corsi pomeridiani, progetti interdisciplinari, PCTO;</li>
+            <li class="flex gap-3"><span class="font-mono text-cobalt font-bold">b)</span> uso tramite strumenti raccomandati, autorizzati o messi a disposizione dall’Istituto;</li>
+            <li class="flex gap-3"><span class="font-mono text-cobalt font-bold">c)</span> attività svolte a distanza o con dispositivi personali (BYOD), qualora finalizzate all’adempimento di compiti scolastici assegnati.</li>
+          </ul>
+          <p>Le disposizioni si applicano altresì alle attività amministrative degli uffici di segreteria, nel rispetto delle finalità istituzionali e delle disposizioni del DSGA, e alle attività didattiche presso la sezione carceraria della Casa Circondariale di Verona (Montorio), con le specificità di cui all’<a href="#art-13" class="font-semibold text-cobalt underline decoration-2 underline-offset-4 hover:text-seal transition-colors">Art. 13</a>.</p>
+        </div>
+      </article>
+
+      <article id="art-2" class="reveal">
+        <header class="border-b-2 border-ink flex items-baseline gap-4 pb-3 mb-6"><span class="font-mono text-cobalt font-bold text-sm">ART. 02</span><h3 class="font-display text-2xl md:text-3xl font-black">Riferimenti Normativi</h3></header>
+        <p class="text-[15px] text-ink/80 leading-relaxed mb-4">L’utilizzo degli strumenti di IA avviene nel pieno rispetto del quadro normativo vigente:</p>
+        <div class="flex flex-wrap gap-2 font-mono text-[11px]">
+          <span class="border border-ink/25 bg-white/60 rounded-full px-3 py-1.5">Reg. UE 2016/679 — GDPR</span>
+          <span class="border border-ink/25 bg-white/60 rounded-full px-3 py-1.5">Reg. UE 2024/1689 — AI Act</span>
+          <span class="border border-ink/25 bg-white/60 rounded-full px-3 py-1.5">Legge 132/2025</span>
+          <span class="border border-ink/25 bg-white/60 rounded-full px-3 py-1.5">D.Lgs. 196/2003 · 101/2018</span>
+          <span class="border border-ink/25 bg-white/60 rounded-full px-3 py-1.5">L. 633/1941 — Diritto d’autore</span>
+          <span class="border border-ink/25 bg-white/60 rounded-full px-3 py-1.5">Linee Guida MIM</span>
+        </div>
+      </article>
+
+      <article id="art-3" class="reveal">
+        <header class="border-b-2 border-ink flex items-baseline gap-4 pb-3 mb-6"><span class="font-mono text-cobalt font-bold text-sm">ART. 03</span><h3 class="font-display text-2xl md:text-3xl font-black">Diritti, Doveri e Libertà di Insegnamento dei Docenti</h3></header>
+        <ul class="space-y-4 text-[15px] text-ink/80 leading-relaxed">
+          <li><strong class="font-display">Selezione delle strumentazioni.</strong> Il docente è incoraggiato a sperimentare l’IA per innovare la progettazione didattica, predisporre materiali personalizzati e arricchire le metodologie di verifica, privilegiando gli strumenti della <a href="#strumenti" class="font-semibold text-cobalt underline decoration-2 underline-offset-4">White-list d’Istituto</a> (Allegato B).</li>
+          <li><strong class="font-display">Primato della valutazione umana.</strong> L’output algoritmico non può in alcun caso surrogare la valutazione: al docente compete, in via esclusiva, titolarità e responsabilità ultima dell’attribuzione del merito e del giudizio valutativo <span class="hl-c font-semibold">(human-in-the-loop)</span>.</li>
+          <li><strong class="font-display">Trasparenza metodologica.</strong> Nell’assegnazione delle attività, il docente esplicita modalità, limiti e scopi d’uso consentito (brainstorming, sintesi, correzione sintattica) o precluso (redazione integrale di testi, risoluzione automatica di problemi).</li>
+          <li><strong class="font-display">Valutazione autentica e di processo.</strong> Verifiche strutturate privilegiando il processo: discussione critica, cronologia delle bozze, diario di bordo dei prompt, compiti di realtà e argomentazione orale, rispetto alla mera consegna del prodotto finito.</li>
+          <li><strong class="font-display">AI detector e contraddittorio.</strong> Gli applicativi di rilevazione automatica presentano margini di errore intrinseci e <em>non costituiscono prova probatoria autonoma o sufficiente</em>: al fondato sospetto di uso non autorizzato, il docente attiva tempestivamente un colloquio orale di verifica sull’effettiva padronanza dei contenuti e del processo logico, prima di qualsiasi determinazione valutativa o disciplinare.</li>
+        </ul>
+      </article>
+
+      <article id="art-4" class="reveal">
+        <header class="border-b-2 border-ink flex items-baseline gap-4 pb-3 mb-6"><span class="font-mono text-cobalt font-bold text-sm">ART. 04</span><h3 class="font-display text-2xl md:text-3xl font-black">Diritti e Doveri degli Studenti</h3></header>
+        <ul class="space-y-4 text-[15px] text-ink/80 leading-relaxed">
+          <li><strong class="font-display text-moss">Usi formativi consentiti.</strong> Ove autorizzata dal docente, l’IA supporta lo studio: chiarimento di concetti complessi, brainstorming, simulazioni, traduzioni comparative, strutturazione di mappe concettuali.</li>
+          <li><strong class="font-display text-seal">Usi vietati — ghostwriting e sostituzione cognitiva.</strong> Divieto assoluto di presentare elaborati, relazioni o compiti generati integralmente o prevalentemente dall’IA come opera propria, e di ricorrere all’IA durante prove di verifica sommativa in aula senza esplicita autorizzazione.</li>
+          <li><strong class="font-display">Obbligo di trasparenza e citazione.</strong> Dichiarare l’uso di strumenti di IA che abbiano fornito un contributo sostanziale, indicando strumento utilizzato e tipologia di interazione svolta.</li>
+          <li><strong class="font-display text-seal">Divieto di deepfake e usi lesivi.</strong> Infrazione gravissima: creare, manipolare o diffondere contenuti multimediali raffiguranti membri della comunità scolastica senza consenso o con finalità denigratorie, diffamatorie o lesive della dignità (bullismo e cyberbullismo).</li>
+          <li><strong class="font-display">Gradualità per biennio e triennio.</strong> Primo biennio: impiego prioritariamente sotto la guida diretta del docente. Secondo biennio e quinto anno: uso progressivamente autonomo e orientato alle discipline di indirizzo.</li>
+          <li><strong class="font-display text-moss">Inclusione e accessibilità BES/DSA.</strong> Pienamente promosso l’uso personalizzato di strumenti di IA compensativi (sintesi vocale, mappe, tutor adattivi) in coerenza con PDP e PEI.</li>
+          <li><strong class="font-display">Ambito PCTO.</strong> Conformità alle disposizioni dell’ente ospitante; divieto assoluto di immettere dati aziendali riservati in piattaforme pubbliche.</li>
+          <li><strong class="font-display">Diritto d’autore.</strong> I testi e i contenuti generati integralmente da IA non sono tutelati (L. 633/1941): lo studente è responsabile dell’originalità e dell’apporto personale riconoscibile nei propri lavori.</li>
+        </ul>
+      </article>
+
+      <article id="art-5" class="reveal">
+        <header class="border-b-2 border-ink flex items-baseline gap-4 pb-3 mb-6"><span class="font-mono text-cobalt font-bold text-sm">ART. 05</span><h3 class="font-display text-2xl md:text-3xl font-black">Personale ATA e Uffici</h3></header>
+        <ul class="space-y-4 text-[15px] text-ink/80 leading-relaxed">
+          <li>Strumenti di IA approvati a supporto dell’efficienza amministrativa, della redazione di bozze documentali e dell’organizzazione dei flussi di lavoro.</li>
+          <li><strong class="font-display">Validazione umana.</strong> Qualsiasi atto, comunicazione o documento predisposto con il supporto dell’IA è attentamente verificato e validato dal responsabile del procedimento, che ne assume piena paternità e conformità.</li>
+          <li><strong class="font-display text-seal">Riservatezza dei dati.</strong> Divieto tassativo di inserire in sistemi di IA generica o non coperti da convenzione d’Istituto dati personali, dati particolari (sensibili), fascicoli personali di studenti o dipendenti e informazioni riservate.</li>
+          <li><strong class="font-display text-seal">Divieto di decisioni automatizzate.</strong> Vietato l’uso di IA per decisioni automatizzate che producano effetti giuridici o incidano significativamente sulle persone (art. 22 GDPR).</li>
+        </ul>
+      </article>
+
+      <article id="art-6" class="reveal">
+        <header class="border-b-2 border-ink flex items-baseline gap-4 pb-3 mb-6"><span class="font-mono text-cobalt font-bold text-sm">ART. 06</span><h3 class="font-display text-2xl md:text-3xl font-black">Condizioni di Utilizzo e Protezione dei Dati</h3></header>
+        <ul class="space-y-4 text-[15px] text-ink/80 leading-relaxed">
+          <li><strong class="font-display">Account istituzionali e base giuridica.</strong> Attività didattiche e amministrative prioritariamente mediante account e ambienti istituzionali protetti (Workspace for Education / Microsoft 365 Education); base giuridica: adempimento del compito di interesse pubblico (art. 6, par. 1, lett. e GDPR), con sottoscrizione del Patto di Corresponsabilità e Informativa <span class="font-mono text-xs">(Allegato A)</span>.</li>
+          <li><strong class="font-display">Età minima e Termini di Servizio.</strong> L’accesso a piattaforme esterne è subordinato al rispetto dei limiti di età previsti dai fornitori e dalle norme applicabili.</li>
+          <li><strong class="font-display">Garanzie sui dati e trasferimenti extra-UE.</strong> Fornitori che garantiscano l’assenza di utilizzo dei dati scolastici per l’addestramento di modelli pubblici e il rispetto delle clausole contrattuali standard (SCC).</li>
+        </ul>
+      </article>
+
+      <article id="art-7" class="reveal">
+        <header class="border-b-2 border-ink flex items-baseline gap-4 pb-3 mb-6"><span class="font-mono text-cobalt font-bold text-sm">ART. 07</span><h3 class="font-display text-2xl md:text-3xl font-black">Strumenti Ammessi e Strumenti Vietati <span class="italic text-cobalt">(White-list)</span></h3></header>
+        <div class="space-y-4 text-[15px] text-ink/80 leading-relaxed">
+          <p><strong class="font-display">Ruolo di deployer.</strong> L’Istituto agisce quale utilizzatore/distributore dei sistemi di IA ai sensi dell’AI Act, assumendosi la responsabilità dell’adozione conforme e consapevole.</p>
+          <p><strong class="font-display text-moss">White-list di Istituto (Allegato B).</strong> Consentito esclusivamente l’uso degli strumenti inclusi nella lista ufficiale, ciascuno corredato da scheda di conformità: finalità ammesse, target di utenza, requisiti di età, base di trattamento, tipologia di account. <a href="#strumenti" class="font-semibold text-cobalt underline decoration-2 underline-offset-4">Vedi quadro strumenti ↓</a></p>
+          <p><strong class="font-display text-seal">Sistemi di IA vietati.</strong> Tassativamente vietati i sistemi finalizzati a pratiche a rischio inaccettabile (art. 5 AI Act): categorizzazione biometrica, riconoscimento delle emozioni, profilazione comportamentale, attribuzione automatica di voti, manipolazione e sfruttamento di vulnerabilità. <a href="#strumenti" class="font-semibold text-seal underline decoration-2 underline-offset-4">Elenco completo ↓</a></p>
+          <p><strong class="font-display">Integrazione della White-list.</strong> Docenti e personale possono richiedere nuovi applicativi tramite modulo <span class="font-mono text-xs">(Allegato B2)</span>: valutazione del Team di Governance IA, approvazione del Dirigente Scolastico, previo parere di conformità del DPO.</p>
+        </div>
+      </article>
+
+      <article id="art-8" class="reveal">
+        <header class="border-b-2 border-ink flex items-baseline gap-4 pb-3 mb-6"><span class="font-mono text-cobalt font-bold text-sm">ART. 08</span><h3 class="font-display text-2xl md:text-3xl font-black">Governance dell’IA e Sostenibilità Organizzativa</h3></header>
+        <div class="space-y-4 text-[15px] text-ink/80 leading-relaxed">
+          <p>La gestione e il monitoraggio dei sistemi di IA sono affidati a: <strong>Dirigente Scolastico</strong> (garante della conformità istituzionale, responsabile ultimo dell’adozione degli strumenti); <strong>DPO</strong> (consulente per la conformità privacy, pareri preventivi, DPIA art. 35 GDPR); <strong>Team di Governance IA</strong>, coordinato dal Referente per l’Innovazione Didattica e l’IA in raccordo con Animatore Digitale, Team per l’Innovazione e Funzioni Strumentali PTOF.</p>
+          <p>Per piattaforme a potenziale rischio elevato, Team e DPO curano la redazione della <span class="hl-c font-semibold">DPIA</span> e, ove prescritto dall’art. 27 dell’AI Act, della <span class="hl-c font-semibold">FRIA</span> — Valutazione d’Impatto sui Diritti Fondamentali.</p>
+        </div>
+      </article>
+
+      <article id="art-9" class="reveal">
+        <header class="border-b-2 border-ink flex items-baseline gap-4 pb-3 mb-6"><span class="font-mono text-cobalt font-bold text-sm">ART. 09</span><h3 class="font-display text-2xl md:text-3xl font-black">Formazione e Cittadinanza Digitale</h3></header>
+        <ul class="space-y-4 text-[15px] text-ink/80 leading-relaxed">
+          <li>Percorsi formativi per docenti e personale ATA: prompt engineering etico, valutazione critica degli output, privacy e sicurezza.</li>
+          <li>Educazione all’uso critico e consapevole dell’IA integrata nei percorsi di Educazione Civica e Cittadinanza Digitale per tutti gli studenti.</li>
+          <li>Prima dell’utilizzo studentesco, il docente assicura un’attività di alfabetizzazione minima sui rischi connessi e sulle modalità d’uso corretto.</li>
+        </ul>
+      </article>
+
+      <article id="art-10" class="reveal">
+        <header class="border-b-2 border-ink flex items-baseline gap-4 pb-3 mb-6"><span class="font-mono text-cobalt font-bold text-sm">ART. 10</span><h3 class="font-display text-2xl md:text-3xl font-black">Sanzioni, Provvedimenti Disciplinari e Contraddittorio</h3></header>
+        <p class="text-[15px] text-ink/80 leading-relaxed mb-5">La violazione delle disposizioni costituisce mancanza disciplinare, con sanzioni graduate secondo proporzionalità, gradualità e finalità rieducativa, nel pieno rispetto dello Statuto delle Studentesse e degli Studenti e del Regolamento di Disciplina d’Istituto. <a href="#sanzioni" class="font-semibold text-cobalt underline decoration-2 underline-offset-4">Scala dettagliata ↓</a></p>
+        <p class="border-l-4 border-gold bg-gold/25 p-4 text-[15px] leading-relaxed"><strong class="font-display">Garanzia inderogabile del contraddittorio.</strong> Prima dell’irrogazione di qualsiasi provvedimento disciplinare o sanzione valutativa legata all’uso dell’IA, allo studente è sempre garantito il diritto di essere ascoltato e di esporre le proprie ragioni in colloquio con il docente o il Consiglio di Classe.</p>
+      </article>
+
+      <article id="art-11" class="reveal">
+        <header class="border-b-2 border-ink flex items-baseline gap-4 pb-3 mb-6"><span class="font-mono text-cobalt font-bold text-sm">ART. 11</span><h3 class="font-display text-2xl md:text-3xl font-black">Procedura di Segnalazione Interna</h3></header>
+        <div class="space-y-4 text-[15px] text-ink/80 leading-relaxed">
+          <p>Qualsiasi membro della comunità scolastica può segnalare malfunzionamenti, anomalie, rischi privacy o incidenti legati all’IA mediante il Modulo di Segnalazione <span class="font-mono text-xs">(Allegato C)</span>, trasmesso al Dirigente Scolastico e al Team di Governance IA.</p>
+          <p>Piena riservatezza dell’identità del segnalante, ai sensi della disciplina sul whistleblowing (D.Lgs. 24/2023) e del GDPR.</p>
+        </div>
+      </article>
+
+      <article id="art-12" class="reveal">
+        <header class="border-b-2 border-ink flex items-baseline gap-4 pb-3 mb-6"><span class="font-mono text-cobalt font-bold text-sm">ART. 12</span><h3 class="font-display text-2xl md:text-3xl font-black">Revisione Periodica</h3></header>
+        <p class="text-[15px] text-ink/80 leading-relaxed">Il Regolamento è soggetto a monitoraggio continuo e revisione annuale da parte del Team di Governance IA e del Dirigente Scolastico, in raccordo con Collegio dei Docenti e Consiglio di Istituto, per il costante allineamento alle evoluzioni tecnologiche e normative.</p>
+      </article>
+
+      <article id="art-13" class="reveal">
+        <header class="border-b-2 border-ink flex items-baseline gap-4 pb-3 mb-6"><span class="font-mono text-seal font-bold text-sm">ART. 13</span><h3 class="font-display text-2xl md:text-3xl font-black">Specificità della Sede Carceraria <span class="italic text-seal">(Montorio)</span></h3></header>
+        <div class="space-y-4 text-[15px] text-ink/80 leading-relaxed">
+          <p>Nella sezione associata attiva presso la Casa Circondariale di Verona (Montorio), l’impiego di tecnologie digitali e applicativi di IA nell’indirizzo Odontotecnico avviene nel rigoroso rispetto delle disposizioni e autorizzazioni dell’Amministrazione Penitenziaria e della Direzione dell’Istituto Penitenziario. <a href="#montorio" class="font-semibold text-seal underline decoration-2 underline-offset-4">Sezione dedicata ↓</a></p>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ STRUMENTI ══════════ -->
+<section id="strumenti" class="bg-[#EFE6D8] border-y-2 border-ink py-24">
+  <div class="max-w-7xl mx-auto px-5">
+    <div class="flex flex-wrap items-end justify-between gap-6 mb-12">
+      <div>
+        <p class="reveal font-mono text-[11px] uppercase tracking-[.3em] text-cobalt mb-3">Rif. Art. 7 · Allegati B e B2</p>
+        <h2 class="mask font-display text-4xl md:text-5xl font-black"><span class="mask-inner">Cosa entra in aula, <span class="italic text-seal">cosa resta fuori</span></span></h2>
+      </div>
+      <p class="stamp text-seal">Deployer · AI Act</p>
+    </div>
+    <div class="grid lg:grid-cols-2 gap-6">
+      <!-- White list -->
+      <div class="reveal card-lift bg-white/80 border-2 border-moss p-8">
+        <div class="flex items-center justify-between mb-6">
+          <h3 class="font-display text-2xl font-black text-moss">White-list d’Istituto</h3>
+          <span class="font-mono text-[10px] uppercase tracking-[.2em] text-moss border border-moss rounded-full px-3 py-1">Ammessi</span>
+        </div>
+        <p class="text-sm text-ink/70 leading-relaxed mb-6">Esclusivamente gli strumenti inclusi nella White-list ufficiale (Allegato B), ciascuno corredato da scheda di conformità:</p>
+        <ul class="grid sm:grid-cols-2 gap-3 font-mono text-[11px] mb-8">
+          <li class="border border-moss/40 bg-moss/10 rounded-lg px-3 py-2">✓ Finalità ammesse</li>
+          <li class="border border-moss/40 bg-moss/10 rounded-lg px-3 py-2">✓ Target di utenza</li>
+          <li class="border border-moss/40 bg-moss/10 rounded-lg px-3 py-2">✓ Requisiti di età</li>
+          <li class="border border-moss/40 bg-moss/10 rounded-lg px-3 py-2">✓ Base di trattamento</li>
+          <li class="border border-moss/40 bg-moss/10 rounded-lg px-3 py-2 sm:col-span-2">✓ Tipologia di account (istituzionale)</li>
+        </ul>
+        <div class="border-t border-ink/15 pt-5 text-sm text-ink/70 leading-relaxed">
+          <p><strong class="font-display text-ink">Nuovo strumento?</strong> Modulo di richiesta <span class="font-mono text-xs">(Allegato B2)</span> → valutazione Team di Governance IA → approvazione del Dirigente Scolastico, previo parere di conformità del DPO.</p>
+        </div>
+      </div>
+      <!-- Vietati -->
+      <div class="reveal card-lift bg-ink text-paper border-2 border-seal p-8" style="--d:.12s">
+        <div class="flex items-center justify-between mb-6">
+          <h3 class="font-display text-2xl font-black text-seal">Sistemi di IA vietati</h3>
+          <span class="font-mono text-[10px] uppercase tracking-[.2em] text-seal border border-seal rounded-full px-3 py-1">Art. 5 AI Act</span>
+        </div>
+        <ul class="space-y-4">
+          <li class="flex gap-4 items-start border-b border-paper/10 pb-4"><span class="font-display font-black text-seal text-xl leading-none">✕</span><p class="text-sm text-paper/80 leading-relaxed"><strong class="text-paper">Categorizzazione biometrica</strong> o identificazione biometrica remota.</p></li>
+          <li class="flex gap-4 items-start border-b border-paper/10 pb-4"><span class="font-display font-black text-seal text-xl leading-none">✕</span><p class="text-sm text-paper/80 leading-relaxed"><strong class="text-paper">Riconoscimento delle emozioni</strong> di studenti o personale.</p></li>
+          <li class="flex gap-4 items-start border-b border-paper/10 pb-4"><span class="font-display font-black text-seal text-xl leading-none">✕</span><p class="text-sm text-paper/80 leading-relaxed"><strong class="text-paper">Valutazione o profilazione comportamentale</strong> automatizzata.</p></li>
+          <li class="flex gap-4 items-start border-b border-paper/10 pb-4"><span class="font-display font-black text-seal text-xl leading-none">✕</span><p class="text-sm text-paper/80 leading-relaxed"><strong class="text-paper">Attribuzione automatica di voti</strong> o giudizi docimologici in assenza di valutazione del docente.</p></li>
+          <li class="flex gap-4 items-start"><span class="font-display font-black text-seal text-xl leading-none">✕</span><p class="text-sm text-paper/80 leading-relaxed"><strong class="text-paper">Manipolazione comportamentale</strong> o sfruttamento di vulnerabilità — sistemi a rischio inaccettabile.</p></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ SANZIONI ══════════ -->
+<section id="sanzioni" class="max-w-7xl mx-auto px-5 py-24">
+  <div class="mb-12">
+    <p class="reveal font-mono text-[11px] uppercase tracking-[.3em] text-seal mb-3">Rif. Art. 10 · Regolamento di Disciplina</p>
+    <h2 class="mask font-display text-4xl md:text-5xl font-black"><span class="mask-inner">Scala di gravità <span class="italic text-seal">delle infrazioni</span></span></h2>
+  </div>
+  <div class="grid md:grid-cols-3 gap-6">
+    <div class="reveal card-lift border-2 border-ink bg-white/70 p-7">
+      <div class="flex justify-between items-center mb-2"><span class="font-mono text-[10px] uppercase tracking-[.2em] text-ink/50">Livello I</span><span class="font-display font-black text-xl text-gold border-2 border-ink px-2 -rotate-3 bg-gold/30">LIEVE</span></div>
+      <div class="h-2 bg-ink/10 rounded-full my-5"><div class="h-full w-1/3 bg-gold border border-ink/30 rounded-full"></div></div>
+      <p class="text-sm text-ink/75 leading-relaxed mb-4">Uso non autorizzato dell’IA in esercitazioni ordinarie; mancata citazione dello strumento per supporti marginali.</p>
+      <ul class="text-xs text-ink/65 space-y-1.5 border-t border-ink/10 pt-4">
+        <li>→ Rielaborazione guidata dell’elaborato</li>
+        <li>→ Richiamo all’onestà intellettuale</li>
+        <li>→ Annotazione formativa</li>
+      </ul>
+    </div>
+    <div class="reveal card-lift border-2 border-ink bg-white/70 p-7" style="--d:.1s">
+      <div class="flex justify-between items-center mb-2"><span class="font-mono text-[10px] uppercase tracking-[.2em] text-ink/50">Livello II</span><span class="font-display font-black text-xl text-[#C77800] border-2 border-ink px-2 -rotate-3 bg-[#C77800]/15">GRAVE</span></div>
+      <div class="h-2 bg-ink/10 rounded-full my-5"><div class="h-full w-2/3 bg-[#E39A1B] border border-ink/30 rounded-full"></div></div>
+      <p class="text-sm text-ink/75 leading-relaxed mb-4">Consegna di elaborati con plagio conclamato da IA in prove sommative o verifiche ufficiali; uso occulto dell’IA durante compiti in classe.</p>
+      <ul class="text-xs text-ink/65 space-y-1.5 border-t border-ink/10 pt-4">
+        <li>→ Annullamento della prova</li>
+        <li>→ Verifica orale immediata di recupero</li>
+        <li>→ Annotazione sul registro disciplinare</li>
+        <li>→ Comunicazione alla famiglia · incidenza sul comportamento</li>
+      </ul>
+    </div>
+    <div class="reveal card-lift border-2 border-seal bg-seal/5 p-7" style="--d:.2s">
+      <div class="flex justify-between items-center mb-2"><span class="font-mono text-[10px] uppercase tracking-[.2em] text-seal/70">Livello III</span><span class="font-display font-black text-xl text-paper border-2 border-seal bg-seal px-2 -rotate-3">GRAVISSIMA</span></div>
+      <div class="h-2 bg-ink/10 rounded-full my-5"><div class="h-full w-full bg-seal rounded-full"></div></div>
+      <p class="text-sm text-ink/75 leading-relaxed mb-4">Generazione e diffusione di deepfake, molestie digitali, violazione dolosa di sistemi protetti o lesione della dignità personale.</p>
+      <ul class="text-xs text-ink/65 space-y-1.5 border-t border-seal/25 pt-4">
+        <li>→ Sanzioni disciplinari di massima gravità (sospensione)</li>
+        <li>→ Delibera degli organi competenti</li>
+        <li>→ Eventuale informativa all’Autorità Giudiziaria</li>
+      </ul>
+    </div>
+  </div>
+  <div class="reveal mt-10 border-2 border-ink bg-gold/40 p-6 flex flex-col md:flex-row items-start md:items-center gap-5">
+    <span class="stamp text-ink shrink-0">Garanzia inderogabile</span>
+    <p class="text-[15px] leading-relaxed text-ink/80"><strong class="font-display">Contraddittorio sempre.</strong> Prima dell’irrogazione di qualsiasi provvedimento disciplinare o sanzione valutativa legata all’IA, lo studente ha diritto di essere ascoltato e di esporre le proprie ragioni in un colloquio con il docente o il Consiglio di Classe. Gli AI detector non costituiscono prova probatoria autonoma.</p>
+  </div>
+</section>
+
+<!-- ══════════ GOVERNANCE ══════════ -->
+<section id="governance" class="bg-ink text-paper py-24">
+  <div class="max-w-7xl mx-auto px-5">
+    <div class="grid lg:grid-cols-[.9fr_1.1fr] gap-12 mb-14">
+      <div>
+        <p class="reveal font-mono text-[11px] uppercase tracking-[.3em] text-gold mb-3">Rif. Artt. 8 – 9 · 11 – 12</p>
+        <h2 class="mask font-display text-4xl md:text-5xl font-black leading-tight"><span class="mask-inner">Governance, formazione<br>e <span class="italic text-gold">manutenzione</span> della norma</span></h2>
+      </div>
+      <p class="reveal text-paper/65 leading-relaxed self-end">Una regia interna chiara — Dirigente, DPO e Team di Governance IA — accompagna la sperimentazione, valuta le conformità, forma il personale e revisiona il Regolamento ogni anno.</p>
+    </div>
+    <div class="grid md:grid-cols-3 gap-5 mb-10">
+      <div class="reveal card-lift border border-paper/20 p-7">
+        <p class="font-mono text-gold text-xs mb-5">RUOLO · 01</p>
+        <h3 class="font-display text-2xl font-bold mb-3">Dirigente Scolastico</h3>
+        <p class="text-paper/65 text-sm leading-relaxed">Garante della conformità istituzionale; responsabile ultimo dell’adozione degli strumenti; approva le integrazioni alla White-list.</p>
+      </div>
+      <div class="reveal card-lift border border-paper/20 p-7" style="--d:.1s">
+        <p class="font-mono text-gold text-xs mb-5">RUOLO · 02</p>
+        <h3 class="font-display text-2xl font-bold mb-3">DPO</h3>
+        <p class="text-paper/65 text-sm leading-relaxed">Consulente per la conformità privacy; pareri preventivi; DPIA (art. 35 GDPR) e FRIA (art. 27 AI Act) per i sistemi ad alto rischio.</p>
+      </div>
+      <div class="reveal card-lift border border-paper/20 p-7" style="--d:.2s">
+        <p class="font-mono text-gold text-xs mb-5">RUOLO · 03</p>
+        <h3 class="font-display text-2xl font-bold mb-3">Team di Governance IA</h3>
+        <p class="text-paper/65 text-sm leading-relaxed">Coordinato dal Referente per l’Innovazione Didattica e l’IA, in raccordo con Animatore Digitale, Team per l’Innovazione e Funzioni Strumentali PTOF.</p>
+      </div>
+    </div>
+    <div class="grid md:grid-cols-2 gap-5">
+      <div class="reveal border border-paper/20 p-7">
+        <h3 class="font-display text-xl font-bold text-gold mb-4">Formazione &amp; cittadinanza digitale · Art. 9</h3>
+        <ul class="text-sm text-paper/70 space-y-2.5 leading-relaxed">
+          <li>— Percorsi per docenti e ATA: prompt engineering etico, valutazione critica degli output, privacy e sicurezza.</li>
+          <li>— Educazione all’uso critico dell’IA integrata in Educazione Civica e Cittadinanza Digitale.</li>
+          <li>— Alfabetizzazione minima sui rischi prima di ogni uso studentesco.</li>
+        </ul>
+      </div>
+      <div class="reveal border border-paper/20 p-7" style="--d:.1s">
+        <h3 class="font-display text-xl font-bold text-gold mb-4">Segnalazione &amp; revisione · Artt. 11–12</h3>
+        <ul class="text-sm text-paper/70 space-y-2.5 leading-relaxed">
+          <li>— Modulo di Segnalazione <span class="font-mono text-xs">(Allegato C)</span> a DS e Team Governance IA per malfunzionamenti, anomalie, rischi privacy, incidenti.</li>
+          <li>— Riservatezza del segnalante: whistleblowing D.Lgs. 24/2023 e GDPR.</li>
+          <li>— Monitoraggio continuo e revisione annuale con Collegio e Consiglio d’Istituto.</li>
+        </ul>
+        <div class="mt-5 flex flex-wrap gap-2 font-mono text-[10px]">
+          <span class="border border-paper/30 rounded-full px-3 py-1">ALLEGATO A · Patto e Informativa</span>
+          <span class="border border-paper/30 rounded-full px-3 py-1">ALLEGATO B · White-list</span>
+          <span class="border border-paper/30 rounded-full px-3 py-1">ALLEGATO B2 · Richiesta</span>
+          <span class="border border-paper/30 rounded-full px-3 py-1">ALLEGATO C · Segnalazione</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ MONTORIO ══════════ -->
+<section id="montorio" class="bg-[#1A1410] text-[#EFE6D8] py-24 relative overflow-hidden">
+  <p class="absolute -right-8 top-10 font-display font-black italic text-[22vw] leading-none text-[#EFE6D8]/5 select-none pointer-events-none" aria-hidden="true">§13</p>
+  <div class="max-w-5xl mx-auto px-5 relative">
+    <p class="reveal font-mono text-[11px] uppercase tracking-[.3em] text-[#E39A1B] mb-4">Art. 13 · Casa Circondariale di Verona — Montorio</p>
+    <h2 class="mask font-display text-4xl md:text-5xl font-black leading-tight mb-10"><span class="mask-inner">La sezione carceraria:<br><span class="italic text-[#E39A1B]">diritto allo studio, sicurezza assoluta.</span></span></h2>
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="reveal border-t-2 border-[#E39A1B] pt-5">
+        <p class="font-mono text-xs text-[#E39A1B] mb-3">13.1</p>
+        <p class="text-sm leading-relaxed text-[#EFE6D8]/75">Nell’indirizzo Odontotecnico, tecnologie digitali e applicativi IA impiegati nel rigoroso rispetto delle disposizioni e autorizzazioni dell’<strong class="text-[#EFE6D8]">Amministrazione Penitenziaria</strong> e della Direzione dell’Istituto Penitenziario.</p>
+      </div>
+      <div class="reveal border-t-2 border-[#E39A1B] pt-5" style="--d:.1s">
+        <p class="font-mono text-xs text-[#E39A1B] mb-3">13.2</p>
+        <p class="text-sm leading-relaxed text-[#EFE6D8]/75">Accesso alle risorse assistite da IA sotto <strong class="text-[#EFE6D8]">diretta e costante supervisione docente</strong>, su dispositivi dedicati privi di connessioni esterne non autorizzate, nel pieno rispetto delle norme di sicurezza penitenziaria.</p>
+      </div>
+      <div class="reveal border-t-2 border-[#E39A1B] pt-5" style="--d:.2s">
+        <p class="font-mono text-xs text-[#E39A1B] mb-3">13.3</p>
+        <p class="text-sm leading-relaxed text-[#EFE6D8]/75">Il Regolamento <strong class="text-[#EFE6D8]">integra e non sostituisce</strong> il Regolamento d’Istituto: in caso di contrasto prevalgono, per quanto di competenza, le disposizioni più rigorose in materia di protezione dei dati personali e di tutela degli studenti.</p>
+      </div>
+    </div>
+    <p class="stamp text-[#E39A1B] mt-10">Supervisione costante · dispositivi dedicati</p>
+  </div>
+</section>
+
+<!-- ══════════ FOOTER ══════════ -->
+<footer class="bg-paper border-t-2 border-ink">
+  <div class="max-w-7xl mx-auto px-5 py-16 grid md:grid-cols-[1.2fr_.8fr] gap-12">
+    <div>
+      <div class="flex items-center gap-4 mb-6">
+        <span class="w-12 h-12 rounded-full bg-seal text-paper font-display font-black italic grid place-items-center">FF</span>
+        <h2 class="font-display text-3xl font-black leading-tight">Istituto di Istruzione Superiore<br>“Ferraris – Fermi” · Verona</h2>
+      </div>
+      <p class="text-sm text-ink/70 leading-relaxed max-w-lg">Il presente Regolamento — parte integrante del Regolamento d’Istituto, in raccordo con PTOF e Regolamento degli Uffici di Segreteria — entra in vigore il <strong>1° settembre 2026</strong>, con fase di sperimentazione assistita fino al 31 dicembre 2026 affidata al Team di Governance IA.</p>
+      <div class="mt-8 flex flex-wrap gap-2 font-mono text-[10px] text-ink/60">
+        <span class="border border-ink/20 rounded-full px-3 py-1">CM VRIS01800R</span>
+        <span class="border border-ink/20 rounded-full px-3 py-1">CF 93245100230</span>
+        <span class="border border-ink/20 rounded-full px-3 py-1">tel. 045 595855</span>
+      </div>
+    </div>
+    <div class="font-mono text-[11.5px] leading-relaxed text-ink/70 space-y-4 md:border-l md:border-ink/15 md:pl-10">
+      <p><span class="font-bold text-ink block">ITT “Galileo Ferraris”</span>via del Pontiere, 40 — 37122 Verona</p>
+      <p><span class="font-bold text-ink block">IP “Enrico Fermi”</span>Piazzale Guardini, 2 — 37138 Verona</p>
+      <p><span class="font-bold text-ink block">Scuola carceraria · Odontotecnico</span>Via San Michele, 15 — 37141 Montorio (VR)</p>
+      <p class="pt-2 border-t border-ink/15">vris01800r@istruzione.it<br>vris01800r@pec.istruzione.it<br>www.ferrarisfermi.it</p>
+    </div>
+  </div>
+  <div class="border-t border-ink/15">
+    <p class="max-w-7xl mx-auto px-5 py-5 font-mono text-[10px] uppercase tracking-[.2em] text-ink/50 flex flex-wrap justify-between gap-2">
+      <span>Regolamento IA · Proposta Collegio dei Docenti a.s. 2026/2027</span>
+      <span>Human-in-the-loop · sempre</span>
+    </p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ── progress + header ── */
+  var progressBar = document.getElementById('progressBar');
+  var siteHeader = document.getElementById('siteHeader');
+
+  /* ── scrollspy: TOC articoli ── */
+  var tocLinks = Array.prototype.slice.call(document.querySelectorAll('.toc-link, .toc-chip'));
+  var tocTargets = tocLinks.map(function(l){ return document.getElementById(l.getAttribute('data-target')); });
+  function spyToc(){
+    var line = window.innerHeight * 0.38;
+    var activeIdx = -1;
+    for(var i=0;i<tocTargets.length;i++){
+      var el = tocTargets[i];
+      if(el && el.getBoundingClientRect().top < line) activeIdx = i;
+    }
+    tocLinks.forEach(function(l, i){ l.classList.toggle('active', i === activeIdx); });
+  }
+
+  /* ── scrollspy: menu superiore ── */
+  var topLinks = Array.prototype.slice.call(document.querySelectorAll('.top-link'));
+  var mobileLinks = Array.prototype.slice.call(document.querySelectorAll('.mobile-link'));
+  function spyTop(){
+    var line = window.innerHeight * 0.35;
+    var activeSec = '';
+    topLinks.forEach(function(l){
+      var sec = document.getElementById(l.getAttribute('data-sec'));
+      if(sec && sec.getBoundingClientRect().top < line) activeSec = l.getAttribute('data-sec');
+    });
+    topLinks.forEach(function(l){ l.classList.toggle('nav-active', l.getAttribute('data-sec') === activeSec); });
+    mobileLinks.forEach(function(l){ l.classList.toggle('nav-active', l.getAttribute('data-sec') === activeSec); });
+  }
+
+  function onScroll(){
+    var doc = document.documentElement;
+    var max = doc.scrollHeight - window.innerHeight;
+    if(progressBar) progressBar.style.width = (max > 0 ? (window.scrollY / max) * 100 : 0) + '%';
+    if(siteHeader) siteHeader.classList.toggle('scrolled', window.scrollY > 24);
+    spyToc();
+    spyTop();
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  window.addEventListener('resize', onScroll);
+
+  /* ── menu mobile hamburger ── */
+  var btnMenu = document.getElementById('btnMenu');
+  var mobileMenu = document.getElementById('mobileMenu');
+  var menuOpen = false;
+  function setMenu(open){
+    menuOpen = open;
+    if(mobileMenu){ mobileMenu.style.maxHeight = open ? mobileMenu.scrollHeight + 'px' : '0px'; }
+    if(btnMenu){
+      btnMenu.classList.toggle('is-open', open);
+      btnMenu.setAttribute('aria-expanded', open ? 'true' : 'false');
+      btnMenu.setAttribute('aria-label', open ? 'Chiudi il menu di navigazione' : 'Apri il menu di navigazione');
+    }
+  }
+  if(btnMenu && mobileMenu){
+    btnMenu.addEventListener('click', function(){ setMenu(!menuOpen); });
+    mobileMenu.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', function(){ setMenu(false); });
+    });
+  }
+  window.addEventListener('resize', function(){
+    if(window.innerWidth >= 1024 && menuOpen) setMenu(false);
+  });
+
+  /* ── reveal / mask observer ── */
+  var revealEls = document.querySelectorAll('.reveal, .mask');
+  if(reduced){
+    revealEls.forEach(function(el){ el.classList.add('visible'); });
+  } else {
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){ entry.target.classList.add('visible'); obs.unobserve(entry.target); }
+      });
+    }, {threshold:.12, rootMargin:'0px 0px -6% 0px'});
+    revealEls.forEach(function(el){ obs.observe(el); });
+  }
+
+  /* ── counters ── */
+  function animateCount(el){
+    var target = parseInt(el.getAttribute('data-count'), 10);
+    if(reduced){ el.textContent = target; return; }
+    var t0 = performance.now(), dur = 1400;
+    function step(t){
+      var p = Math.min((t - t0) / dur, 1);
+      el.textContent = Math.round(target * p);
+      if(p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+  var counters = document.querySelectorAll('[data-count]');
+  var cObs = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){ animateCount(entry.target); cObs.unobserve(entry.target); }
+    });
+  }, {threshold:.6});
+  counters.forEach(function(el){ cObs.observe(el); });
+
+  /* ── scramble decode ── */
+  var GLYPHS = '§#%&/<>*+=01AI';
+  function scrambleEl(el, delay){
+    var finalText = el.getAttribute('data-text') || el.textContent;
+    if(reduced){ el.textContent = finalText; return; }
+    setTimeout(function(){
+      var frame = 0;
+      function tick(){
+        frame++;
+        var solved = Math.floor(frame / 2.4);
+        var out = '';
+        for(var i=0;i<finalText.length;i++){
+          var ch = finalText.charAt(i);
+          out += (ch === ' ') ? ' ' : (i < solved ? ch : GLYPHS.charAt(Math.floor(Math.random()*GLYPHS.length)));
+        }
+        el.textContent = out;
+        if(solved < finalText.length) requestAnimationFrame(tick);
+        else el.textContent = finalText;
+      }
+      requestAnimationFrame(tick);
+    }, delay);
+  }
+  document.querySelectorAll('[data-scramble]').forEach(function(el, idx){ scrambleEl(el, 350 + idx*500); });
+
+  /* ── stampa PDF ── */
+  function doPrint(){ window.print(); }
+  var btnStampa = document.getElementById('btnStampa');
+  var btnStampaMobile = document.getElementById('btnStampaMobile');
+  if(btnStampa) btnStampa.addEventListener('click', doPrint);
+  if(btnStampaMobile) btnStampaMobile.addEventListener('click', function(){ setMenu(false); doPrint(); });
+
+  onScroll();
+})();
+</script>
+</body>
+</html>
