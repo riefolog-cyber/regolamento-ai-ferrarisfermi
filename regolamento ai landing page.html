@@ -93,6 +93,14 @@ tailwind.config = {
   .tab-btn{transition:all .25s}
   .tab-active{background:#101A2E !important;color:#F5F0E6 !important;border-color:#101A2E !important}
 
+  .schema-card{position:relative;overflow:hidden;transition:transform .28s cubic-bezier(.22,1,.36,1),box-shadow .28s ease,border-color .28s ease,background .28s ease}
+  .schema-card::before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(46,75,224,.08),transparent 55%,rgba(210,59,46,.08));transform:translateX(-110%);transition:transform .45s cubic-bezier(.22,1,.36,1)}
+  .schema-card:hover{transform:translateY(-6px);box-shadow:0 18px 28px -18px rgba(16,26,46,.35);border-color:rgba(16,26,46,.35)}
+  .schema-card:hover::before{transform:translateX(0)}
+  .schema-node{position:relative;overflow:hidden;transition:all .28s cubic-bezier(.22,1,.36,1);border:1.5px solid rgba(16,26,46,.12)}
+  .schema-node:hover{transform:translateY(-4px);border-color:rgba(46,75,224,.5);box-shadow:0 16px 26px -18px rgba(46,75,224,.45)}
+  .schema-node .node-dot{width:10px;height:10px;border-radius:9999px;background:#2E4BE0;box-shadow:0 0 0 5px rgba(46,75,224,.12)}
+
   @media (prefers-reduced-motion: reduce){
     html{scroll-behavior:auto}
     *,*::before,*::after{animation-duration:.001s !important;animation-iteration-count:1 !important;transition-duration:.001s !important}
@@ -270,6 +278,83 @@ tailwind.config = {
       <span>Tav. I — L’istituzione incontra la rete</span><span>art. 1–2</span>
     </figcaption>
   </figure>
+</section>
+
+<!-- ══════════ SCHEMA REGOLAMENTO ══════════ -->
+<section id="schema" class="max-w-7xl mx-auto px-5 py-20">
+  <div class="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+    <div>
+      <p class="reveal font-mono text-[11px] uppercase tracking-[.3em] text-cobalt mb-3">Mappa del sistema</p>
+      <h2 class="mask font-display text-4xl md:text-5xl font-black leading-tight"><span class="mask-inner">Schema del regolamento<br><span class="italic text-cobalt">in una sola vista</span></span></h2>
+    </div>
+    <a href="../regolamento-ia-schema.html?theme=light&embed=1" target="_blank" rel="noopener" class="reveal inline-flex items-center gap-2 rounded-full border-2 border-ink bg-paper px-4 py-2 font-mono text-[10px] uppercase tracking-[.2em] text-ink transition hover:bg-ink hover:text-paper">Apri schema completo →</a>
+  </div>
+
+  <div class="reveal mb-8 max-w-3xl text-ink/75 leading-relaxed" style="--d:.1s">
+    Il regolamento non è un elenco astratto: è un sistema composto da <strong>persone, strumenti, dati, responsabilità e controlli</strong>. Il diagramma mostra come ciascun attore si muove dentro il quadro normativo, dove si applicano i vincoli e dove si esercita la supervisione umana.
+  </div>
+
+  <div class="reveal grid gap-6 lg:grid-cols-[1.5fr_0.8fr]" style="--d:.12s">
+    <div class="overflow-hidden border-2 border-ink bg-paper shadow-[12px_12px_0_0_#2E4BE0]">
+      <div class="flex items-center justify-between gap-4 border-b-2 border-ink bg-ink px-4 py-3 text-[10px] font-mono uppercase tracking-[.2em] text-paper">
+        <span>Schema IA – panorama istituzionale</span>
+        <span class="text-gold">live</span>
+      </div>
+      <iframe
+        src="../regolamento-ia-schema.html?theme=light&embed=1"
+        title="Schema del regolamento IA"
+        class="block w-full h-[1500px] md:h-[1180px] bg-paper"
+        loading="lazy"
+        referrerpolicy="strict-origin-when-cross-origin"
+      ></iframe>
+    </div>
+
+    <div class="grid gap-4">
+      <div class="schema-card rounded-none border-2 border-ink bg-[#F7F5F0] p-4 md:p-5">
+        <p class="font-mono text-[10px] uppercase tracking-[.2em] text-cobalt mb-3">01 · Attori</p>
+        <h3 class="font-display text-2xl font-black leading-tight mb-2">Docenti e studenti</h3>
+        <p class="text-sm leading-relaxed text-ink/70">Tutti usano l’IA nell’ambito scolastico, ma la responsabilità del risultato resta sempre umana.</p>
+      </div>
+      <div class="schema-card rounded-none border-2 border-ink bg-[#F7F5F0] p-4 md:p-5">
+        <p class="font-mono text-[10px] uppercase tracking-[.2em] text-cobalt mb-3">02 · Strumenti</p>
+        <h3 class="font-display text-2xl font-black leading-tight mb-2">White-list</h3>
+        <p class="text-sm leading-relaxed text-ink/70">Solo strumenti autorizzati, conformi alla privacy e alla sicurezza dei dati personali.</p>
+      </div>
+      <div class="schema-card rounded-none border-2 border-ink bg-[#F7F5F0] p-4 md:p-5">
+        <p class="font-mono text-[10px] uppercase tracking-[.2em] text-cobalt mb-3">03 · Governance</p>
+        <h3 class="font-display text-2xl font-black leading-tight mb-2">Team IA</h3>
+        <p class="text-sm leading-relaxed text-ink/70">Il coordinamento interno verifica l’uso, forma il personale e monitora l’adeguatezza del sistema.</p>
+      </div>
+      <div class="schema-card rounded-none border-2 border-ink bg-[#F7F5F0] p-4 md:p-5">
+        <p class="font-mono text-[10px] uppercase tracking-[.2em] text-cobalt mb-3">04 · Controllo</p>
+        <h3 class="font-display text-2xl font-black leading-tight mb-2">Sanzioni e revisione</h3>
+        <p class="text-sm leading-relaxed text-ink/70">Le violazioni sono graduali, proporzionate e accompagnate da un percorso di chiarimento e correttivo.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal mt-8 grid gap-4 md:grid-cols-4" style="--d:.18s">
+    <div class="schema-node rounded-none border-2 border-ink bg-paper p-4 transition-all duration-300">
+      <div class="node-dot mb-4"></div>
+      <p class="font-mono text-[10px] uppercase tracking-[.2em] text-ink/55">Riservatezza</p>
+      <p class="mt-2 text-sm leading-relaxed text-ink/75">Dati protetti, nessun dato sensibile in ambienti non autorizzati.</p>
+    </div>
+    <div class="schema-node rounded-none border-2 border-ink bg-paper p-4 transition-all duration-300">
+      <div class="node-dot mb-4"></div>
+      <p class="font-mono text-[10px] uppercase tracking-[.2em] text-ink/55">Trasparenza</p>
+      <p class="mt-2 text-sm leading-relaxed text-ink/75">Uso dichiarato, citato e valutato secondo criteri didattici chiari.</p>
+    </div>
+    <div class="schema-node rounded-none border-2 border-ink bg-paper p-4 transition-all duration-300">
+      <div class="node-dot mb-4"></div>
+      <p class="font-mono text-[10px] uppercase tracking-[.2em] text-ink/55">Supervisione</p>
+      <p class="mt-2 text-sm leading-relaxed text-ink/75">L’AI sostiene, ma il docente e lo studente mantengono il giudizio finale.</p>
+    </div>
+    <div class="schema-node rounded-none border-2 border-ink bg-paper p-4 transition-all duration-300">
+      <div class="node-dot mb-4"></div>
+      <p class="font-mono text-[10px] uppercase tracking-[.2em] text-ink/55">Responsabilità</p>
+      <p class="mt-2 text-sm leading-relaxed text-ink/75">Ogni scelta d’uso ha un riferimento chiaro e una possibile verifica interna.</p>
+    </div>
+  </div>
 </section>
 
 <!-- ══════════ PRINCÌPI ══════════ -->
